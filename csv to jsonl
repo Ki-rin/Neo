@@ -1,0 +1,11 @@
+import pandas as pd
+import json
+
+# Read the CSV file
+data_frame = pd.read_csv('your_file.csv')
+
+# Convert each row to a JSON object and write to a JSONL file
+with open('output.jsonl', 'w') as outfile:
+    for _, row in data_frame.iterrows():
+        json.dump(row.to_dict(), outfile)
+        outfile.write('\n')
