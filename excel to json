@@ -1,0 +1,22 @@
+import pandas as pd
+import json
+import re
+
+# Read the CSV file
+data_frame = pd.read_csv('your_file.csv')
+
+# Clean and format the data
+# Remove leading numbers from string values
+data_frame = data_frame.applymap(lambda x: re.sub(r'^\d+', '', str(x)) if isinstance(x, str) else x)
+
+# Handle missing or invalid values
+data_frame = data_frame.fillna('N/A')
+
+# Convert each row to a JSON object and write to a JSONL file
+with open('output.jsonl', 'w') as outfile:
+    for _, row in data_frame.iterrows():
+        # Format specific columns if needed
+        # row['column_name'] = format_function(row['column_name'])
+        
+        json.dump(row.to_dict(), outfile)
+        outfile.write('\n')
